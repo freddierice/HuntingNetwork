@@ -10,7 +10,7 @@
 
 Report::Report()
 {
-    
+    type = kNumTypes;
 }
 
 void Report::pushStop( std::string ident, int num )

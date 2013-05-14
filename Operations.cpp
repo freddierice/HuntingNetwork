@@ -204,7 +204,14 @@ std::string RESIDUE(PrintJob *job)
 
 std::string REPDIGIT(PrintJob *job)
 {
-    return "ERROR";
+    int n = job->getNum();
+    if( 11*n == job->getRepe() || n == job->getRepe() )
+    {
+        job->setNum(4*n);
+        return "DOUBLE";
+    }else{
+        return "PRINTER";
+    }
 }
 
 std::string SQUARE(PrintJob *job)

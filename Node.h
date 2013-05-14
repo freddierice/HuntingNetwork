@@ -22,6 +22,7 @@ public:
     Node(std::string name, pNextNode next);
     bool pass(PrintJob *job, Report *report);
     NodeType getType();
+    void setType(NodeType t);
     std::string getName();
 private:
     std::string ident;

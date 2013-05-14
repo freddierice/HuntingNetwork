@@ -13,6 +13,7 @@ Node::Node(std::string name, pNextNode next)
 {
     ident    = name;
     nextNode = next;
+    type = kComputer;
 }
 
 bool Node::pass(PrintJob *job, Report *report)
@@ -58,6 +59,11 @@ bool Node::pass(PrintJob *job, Report *report)
 std::string Node::getName()
 {
     return ident;
+}
+
+void Node::setType(NodeType t)
+{
+    type = t;
 }
 
 NodeType Node::getType()

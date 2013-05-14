@@ -26,8 +26,10 @@ int main (int argc, const char * argv[])
     Node *repdigitNode      = new Node("REPDIGIT", REPDIGIT);
     Node *squareNode        = new Node("SQUARE", SQUARE);
     Node *triangularNode    = new Node("TRIANGULAR", TRIANGULAR);
+    Node *printerNode       = new Node("PRINTER", NULL);
+    printerNode->setType(kPrinter);
     
-    Node **nodes = (Node **)malloc(14*sizeof(Node*));
+    Node **nodes = (Node **)malloc(15*sizeof(Node*));
     nodes[0]  = multipleNode;
     nodes[1]  = abundantNode;
     nodes[2]  = catalanNode;
@@ -42,6 +44,10 @@ int main (int argc, const char * argv[])
     nodes[11] = repdigitNode;
     nodes[12] = squareNode;
     nodes[13] = triangularNode;
+    nodes[14] = printerNode;
+    
+    for(int i = 0; i < 15; ++i )
+        Dag::getInstance().addNode(nodes[i]);
     
     Report ***finalReports = (Report ***)malloc(99*sizeof(Report **));
     for( int repe = 1; repe <= 99; ++repe )
