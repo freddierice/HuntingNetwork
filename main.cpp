@@ -49,6 +49,7 @@ int main (int argc, const char * argv[])
     for(int i = 0; i < 15; ++i )
         Dag::getInstance().addNode(nodes[i]);
     
+    /*
     Report ***finalReports = (Report ***)malloc(99*sizeof(Report **));
     for( int repe = 1; repe <= 99; ++repe )
     {
@@ -117,10 +118,10 @@ int main (int argc, const char * argv[])
                     {
                         if( newLoops )
                         {
-                            finalReports[repe-1][i] = new Report(*reports[i][successes[i][1]]);
+                            finalReports[repe-1][i] = new Report(*reports[i][successes[i][1]-1]);
                             --newLoops;
                         }else{
-                            finalReports[repe-1][i] = new Report(*reports[i][successes[i][0]]);
+                            finalReports[repe-1][i] = new Report(*reports[i][successes[i][0]-1]);
                             --newPrints;
                         }
                     }else if( successes[i][0] )
@@ -133,11 +134,13 @@ int main (int argc, const char * argv[])
         for( int i = 0; i <= killedIndex; ++i )
         {
             for( int k = 0; k < 99; ++k )
-                delete reports[i][k];
-            delete reports[i];
-            delete successes[i];
+                if( reports[i][k] != NULL )
+                    delete reports[i][k];
+            free(reports[i]);
+            free(successes[i]);
         }
-        delete successes;
+        free(successes);
+        free(reports);
         std::cout << "Done with repe: " << repe << std::endl;
     }
     
@@ -147,7 +150,50 @@ int main (int argc, const char * argv[])
             ++totalReports;
     
     std::cout << "Completed with " << totalReports << " good reports" << std::endl;
+     
+     */
     
+    for( int repe = 1; repe <= 99; ++repe )
+    {
+        Report **reports = (Report **)malloc(14*sizeof(Report *));
+        for( int k = 0; k < 14; ++k )
+        {
+            reports[k] = NULL;
+            int i = 1;
+            if(k == 4 && repe == 11 )
+                i = 3; 
+            for( ; i <= 99; ++i )
+            {
+                PrintJob *job = new PrintJob(i, repe);
+                Report *report = new Report();
+                nodes[k]->pass(job, report);
+                if( report->getType() != kError )
+                {
+                    reports[k] = new Report(*report);
+                    delete report;
+                    break;
+                }
+                delete report;
+            }
+        }
+        
+        int totalPrints = 0;
+        int totalLoops = 0;
+        for (int k = 0; k < 14; ++k) 
+        {
+            if( reports[k]->getType() == kPrinted )
+                ++totalPrints;
+            else if( reports[k]->getType() == kLoop )
+                ++totalLoops;
+        }
+        std::cout << "Total Prints: " << totalPrints;
+        std::cout << "Total Loops: "  << totalLoops << std::endl;
+        if( totalPrints == 12 && totalLoops == 2 )
+            for(int i = 0; i < 14; ++i)
+                reports[i]->print(i);
+        free(reports);
+    }
+
     for( int i = 0; i < 14; ++i )
         delete nodes[i];
     

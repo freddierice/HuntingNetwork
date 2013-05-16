@@ -42,3 +42,14 @@ ReportType Report::getType()
 {
     return type;
 }
+
+void Report::print(int i)
+{
+    std::ofstream file ("report.csv",std::ofstream::binary | std::ofstream::app);
+    for (int i = 0; i < stops.size(); ++i) 
+        file << stops.at(i)->getName() << "," << stops.at(i)->getNumber() << std::endl;
+    if( i == 13 )
+        file << "BREAK,BREAK\n";
+    file.close();
+}
+

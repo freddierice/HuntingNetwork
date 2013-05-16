@@ -9,6 +9,8 @@
 #ifndef Dagger_Report_h
 #define Dagger_Report_h
 
+#include "iostream"
+#include "fstream"
 #include "vector"
 #include "Stop.h"
 
@@ -24,6 +26,7 @@ public:
     Stop* lastStop();
     bool isFirst();
     void setType(ReportType t);
+    void print(int i);
     ReportType getType();
 private:
     std::vector<Stop *> stops;

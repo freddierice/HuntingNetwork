@@ -23,7 +23,7 @@ std::string ABUNDANT(PrintJob *job)
     int n = job->getNum();
     int arr[21] = {12, 18, 20, 24, 30, 36, 40, 42, 48, 54, 56, 60, 66, 70, 72, 78, 80, 84, 88, 90, 96};
     bool isAbundant = false;
-    for(int i = 0; i < 22; ++i)
+    for(int i = 0; i < 21; ++i)
         if( arr[i] == n )
         {
             isAbundant = true;
@@ -169,7 +169,7 @@ std::string PRONIC(PrintJob *job)
     if( isPronic )
     {
         job->setNum(n+18);
-        return "SQUARE";
+        return "3MULTIPLE";
     }else{
         return "ERROR";
     }
@@ -198,6 +198,7 @@ std::string RESIDUE(PrintJob *job)
         }
         return "HAPPY";
     }else{
+        job->setNum(n+10);
         return "3MULTIPLE";
     }
 }
@@ -205,7 +206,7 @@ std::string RESIDUE(PrintJob *job)
 std::string REPDIGIT(PrintJob *job)
 {
     int n = job->getNum();
-    if( 11*n == job->getRepe() || n == job->getRepe() )
+    if( 11*n == job->getRepe() )
     {
         job->setNum(4*n);
         return "DOUBLE";
